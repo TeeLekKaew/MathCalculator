@@ -1,4 +1,4 @@
-package cordova-plugin-mathcalculator;
+package th.co.bbtec.cordova.plugin;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -18,6 +18,14 @@ public class MathCalculator extends CordovaPlugin {
             String message = args.getString(0);
             this.coolMethod(message, callbackContext);
             return true;
+        }else if(action.equals("add"))
+        {
+            this.add(args, callbackContext);
+            return true;
+        }else if(action.equals("substract"))
+        {
+            this.substract(args, callbackContext);
+            return true;
         }
         return false;
     }
@@ -27,6 +35,48 @@ public class MathCalculator extends CordovaPlugin {
             callbackContext.success(message);
         } else {
             callbackContext.error("Expected one non-empty string argument.");
+        }
+    }
+
+    private void add(JSONArray args, CallbackContext callback)
+    {
+        if(args != null)
+        {
+                try
+                {
+                     int p1 = Integer.parseInt(args.getJSONObject(0).getString("param1"));
+                     int p2 = Integer.parseInt(args.getJSONObject(0).getString("param2"));
+                       
+                     callback.success(""+ (p1+p2) );
+                          
+                }catch(Exception ex)
+                {
+                    callback.error("Something went wrong "  + ex);
+                }
+        }else
+        {
+            callback.error("Please donot pass null value");
+        }
+    }
+
+    private void substract(JSONArray args, CallbackContext callback)
+    {
+        if(args != null)
+        {
+                try
+                {
+                     int p1 = Integer.parseInt(args.getJSONObject(0).getString("param1"));
+                     int p2 = Integer.parseInt(args.getJSONObject(0).getString("param2"));
+                       
+                     callback.success(""+ (p1-p2) );
+                          
+                }catch(Exception ex)
+                {
+                    callback.error("Something went wrong "  + ex);
+                }
+        }else
+        {
+            callback.error("Please donot pass null value");
         }
     }
 }
